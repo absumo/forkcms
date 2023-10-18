@@ -11,12 +11,8 @@ use Pageon\DoctrineDataGridBundle\Attribute\DataGridMethodColumn;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridPropertyColumn;
 use BadFunctionCallException;
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
 use ForkCMS\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
-use ForkCMS\Modules\MediaLibrary\Domain\MediaGroupMediaItem\MediaGroupMediaItem;
 use JsonSerializable;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\HttpFoundation\File\File;
@@ -72,12 +68,6 @@ class MediaItem implements JsonSerializable
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     protected DateTime $editedOn;
 
-    /**
-     * @var Collection<MediaGroupMediaItem>
-     */
-    #[ORM\OneToMany(mappedBy: 'item', targetEntity: MediaGroupMediaItem::class, cascade: ['persist', 'merge'], orphanRemoval: true)]
-    protected Collection $groups;
-
     #[ORM\Column(enumType: Type::class)]
     protected Type $type;
 
@@ -101,7 +91,6 @@ class MediaItem implements JsonSerializable
     ) {
         $this->createdOn = new DateTime();
         $this->editedOn = new DateTime();
-        $this->groups = new ArrayCollection();
         $this->storageType = StorageType::LOCAL;
     }
 
@@ -280,16 +269,6 @@ class MediaItem implements JsonSerializable
     public function getEditedOn(): DateTime
     {
         return $this->editedOn;
-    }
-
-    public function getGroups(): Collection
-    {
-        return $this->groups;
-    }
-
-    public function hasGroups(): bool
-    {
-        return $this->groups->count() > 0;
     }
 
     // #[DataGridPropertyColumn(label: 'lbl.File')]
