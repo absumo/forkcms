@@ -25,6 +25,7 @@
     "cropper": "^4.0.0",
     "css-minimizer-webpack-plugin": "^4.2.2",
     "dotenv": "^16.0.0",
+    "dropzone": "^6.0.0-beta.2",
     "file-loader": "^6.2.0",
     "fine-uploader": "^5.14.1",
     "flatpickr": "^4.6.13",

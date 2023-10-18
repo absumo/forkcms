@@ -1,0 +1,8 @@
+# Read the documentation at https://github.com/thephpleague/flysystem-bundle/blob/master/docs/1-getting-started.md
+flysystem:
+    storages:
+        media_library.storage:
+            adapter: 'local'
+            options:
+                directory: '%kernel.project_dir%/public/media-library/'
+            public_url: '/media-library'

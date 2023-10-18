@@ -28,7 +28,7 @@
         "doctrine/orm": "^2.8",
         "google/recaptcha": "~1.1",
         "jeroendesloovere/geolocation-php-api": "^2.1",
-        "liip/imagine-bundle": "^2.5",
+        "liip/imagine-bundle": "^2.12",
         "symfony/monolog-bundle": "^3.7",
         "codex-team/editor.js": "^2.0",
         "beberlei/doctrineextensions": "^1.2",
@@ -67,7 +67,9 @@
         "scienta/doctrine-json-functions": "^5.0",
         "twig/intl-extra": "^3.3",
         "symfony/expression-language": "6.*",
-        "symfony/lock": "6.*"
+        "symfony/lock": "6.*",
+        "vich/uploader-bundle": "^2.2",
+        "league/flysystem-bundle": "^3.2"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "dev-master as 3.6.0",

@@ -19,6 +19,18 @@ liip_imagine:
         auto_rotate: ~
         strip: ~
         scale: { dim: [ 128, 128 ] }
+  loaders:
+    media_library:
+      flysystem:
+        filesystem_service: 'media_library.storage'
+  data_loader: media_library
+
+  resolvers:
+    media_library:
+      flysystem:
+        filesystem_service: 'media_library.storage'
+        root_url: '/media-library'
+  cache: media_library
 
 #  resolvers:
 #    default:

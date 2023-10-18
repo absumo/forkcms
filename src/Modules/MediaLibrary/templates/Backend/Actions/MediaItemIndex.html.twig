@@ -1,0 +1,18 @@
+{% extends '@Backend/base/crud/index.html.twig' %}
+{% import '@Backend/base/macros.html.twig' as macro %}
+{% set crudActionName = 'MediaItemUpload' %}
+
+{% block sidebarSubNavigation %}
+  {% include '@MediaLibrary/Backend/NavigationTree.html.twig' with {'overview': true} %}
+{% endblock %}
+
+{% block content %}
+  {% for type, dataGrid in dataGrids %}
+  <div class="content-block content-block-pb">
+    <div class="content-title">
+      <h2>{{ ('lbl.' ~ type|ucfirst)|trans|ucfirst }}</h2>
+    </div>
+    {{ pageon_datagrid(dataGrid) }}
+  </div>
+  {% endfor %}
+{% endblock %}

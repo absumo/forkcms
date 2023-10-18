@@ -1,0 +1,6 @@
+{% extends '@Backend/base/crud/edit.html.twig' %}
+{% set crudIndexAction = 'MediaItemIndex' %}
+
+{% block sidebarSubNavigation %}
+  {% include '@MediaLibrary/Backend/NavigationTree.html.twig' with {'overview': true} %}
+{% endblock %}
