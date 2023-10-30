@@ -1,0 +1,4 @@
+doctrine:
+  dbal:
+    types:
+      media_item_aspect_ratio: ForkCMS\Modules\MediaLibrary\Domain\MediaItem\AspectRatioDBALType
