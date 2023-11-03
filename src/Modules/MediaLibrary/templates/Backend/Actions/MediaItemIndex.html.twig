@@ -7,8 +7,41 @@
 {% endblock %}
 
 {% block content %}
+{#  // start grid layout for media items#}
+  <div class="row g-3 mb-5">
+    {% for n in 1..10 %}
+    <div class="col-lg-4 col-xl-auto">
+      <div class="card card-media-item">
+        <div class="card-image">
+{#          <img src="https://via.placeholder.com/150x150" class="img-responsive w-100" alt="">#}
+          <div class="file-icon d-flex justify-content-center align-items-center fs-2">
+{#            // TODO conditional for correct icon based on file extension#}
+            <i class="fas fa-file"></i>
+            <i class="fas fa-file-pdf"></i>
+            <i class="fas fa-file-archive"></i>
+            <i class="fas fa-file-word"></i>
+            <i class="fas fa-file-video"></i>
+            <i class="fas fa-file-audio"></i>
+          </div>
+        </div>
+        <div class="card-body">
+          <small class="fs-6">30/10/2023 15:22</small>
+          <p class="mb-0"><small>profile_sumo.jpg</small></p>
+        </div>
+        <div class="card-footer d-flex justify-content-center">
+          <a href="#" class="btn btn-sm btn-primary me-2" title="{{ 'lbl.Edit'|trans|ucfirst }}"><i class="fa fas fa-edit me-0"></i></a>
+          <a href="#" class="btn btn-sm btn-primary me-2" title="{{ 'lbl.Crop'|trans|ucfirst }}"><i class="fa fas fa-crop me-0"></i></a>
+          <a href="#" class="btn btn-sm btn-primary me-2" title="{{ 'lbl.Crop'|trans|ucfirst }}"><i class="fa fas fa-link me-0"></i></a>
+          <a href="#" class="btn btn-sm btn-danger ms-auto" title="{{ 'lbl.Delete'|trans|ucfirst }}"><i class="fa fas fa-trash-alt me-0"></i></a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {#  // end grid layout for media items#}
+
   {% for type, dataGrid in dataGrids %}
-  <div class="content-block content-block-pb">
+  <div class="content-block content-block-pb media-library-rows">
     <div class="content-title">
       <h2>{{ ('lbl.' ~ type|ucfirst)|trans|ucfirst }}</h2>
     </div>

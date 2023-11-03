@@ -89,5 +89,8 @@
       "src/Frontend/Cache/",
       "src/Frontend/Core/Js/jquery/jquery.js"
     ]
+  },
+  "volta": {
+    "node": "20.9.0"
   }
 }
