@@ -22,7 +22,7 @@ enum Type: string
               </a>
             ',
             self::IMAGE => '
-              <picture class="container">
+              <picture>
                 <source srcset="%1$s.webp" type="image/webp">
                 <img src="%1$s">
               </picture>

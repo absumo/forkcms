@@ -30,8 +30,47 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
     ],
     routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
     label: 'lbl.Edit',
-    class: 'btn btn-primary btn-sm',
-    iconClass: 'fa fa-edit',
+    class: 'btn btn-sm btn-primary me-2',
+    iconClass: 'fa fas fa-edit me-0',
+    requiredRole: ModuleAction::ROLE_PREFIX . 'BACKEND__MEDIA_ITEM_EDIT',
+    columnAttributes: ['class' => 'fork-data-grid-action'],
+)]
+#[DataGridActionColumn(
+    route: 'backend_action',
+    routeAttributes: [
+        'module' => 'media-library',
+        'action' => 'media-item-edit', // TODO: crop action
+    ],
+    routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
+    label: 'lbl.Crop',
+    class: 'btn btn-sm btn-primary me-2',
+    iconClass: 'fa fas fa-crop me-0',
+    requiredRole: ModuleAction::ROLE_PREFIX . 'BACKEND__MEDIA_ITEM_EDIT',
+    columnAttributes: ['class' => 'fork-data-grid-action'],
+)]
+#[DataGridActionColumn(
+    route: 'backend_action',
+    routeAttributes: [
+        'module' => 'media-library',
+        'action' => 'media-item-edit', // TODO: link action
+    ],
+    routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
+    label: 'lbl.Link',
+    class: 'btn btn-sm btn-primary me-2',
+    iconClass: 'fa fas fa-link me-0',
+    requiredRole: ModuleAction::ROLE_PREFIX . 'BACKEND__MEDIA_ITEM_EDIT',
+    columnAttributes: ['class' => 'fork-data-grid-action'],
+)]
+#[DataGridActionColumn(
+    route: 'backend_action',
+    routeAttributes: [
+        'module' => 'media-library',
+        'action' => 'media-item-delete', // TODO: confirm delete action
+    ],
+    routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
+    label: 'lbl.Delete',
+    class: 'btn btn-sm btn-danger ms-auto',
+    iconClass: 'fa fas fa-trash-alt me-0',
     requiredRole: ModuleAction::ROLE_PREFIX . 'BACKEND__MEDIA_ITEM_EDIT',
     columnAttributes: ['class' => 'fork-data-grid-action'],
 )]
@@ -47,7 +86,6 @@ class MediaItem implements JsonSerializable
     private Uuid $id;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    #[DataGridPropertyColumn(sortable: true, filterable: true, label: 'lbl.MimeType')]
     protected ?string $mime = null;
 
     #[ORM\Column(type: Types::INTEGER, nullable: true)]
@@ -78,7 +116,7 @@ class MediaItem implements JsonSerializable
     private ?File $file = null;
 
     private function __construct(
-        #[DataGridPropertyColumn(sortable: true, filterable: true, label: 'lbl.Title')]
+        #[DataGridPropertyColumn(sortable: true, filterable: true, label: 'lbl.Title', class: 'small')]
         #[ORM\Column(type: Types::STRING)]
         protected string $title,
         #[ORM\Column(type: Types::STRING)]
@@ -265,7 +303,7 @@ class MediaItem implements JsonSerializable
         return $this->createdOn;
     }
 
-    #[DataGridMethodColumn(label: 'lbl.LastEdited')]
+    #[DataGridMethodColumn(order: -1, label: 'lbl.LastEdited', class: 'fs-6')]
     public function getEditedOn(): DateTime
     {
         return $this->editedOn;
@@ -279,10 +317,30 @@ class MediaItem implements JsonSerializable
         $this->webpath = $path;
     }
 
-    #[DataGridMethodColumn(label: 'lbl.File', html: true,)]
+    #[DataGridMethodColumn(order: -2, label: 'lbl.File', class: 'file-icon d-flex justify-content-center align-items-center fs-2', html: true)]
     public function getPreview(): string
     {
-        return sprintf($this->type->getHtml(), $this->webpath);
+        if ($this->type === Type::IMAGE) {
+            return sprintf($this->type->getHtml(), $this->webpath);
+        }
+
+        return sprintf('<i class="fas %s" title="%s"></i>', $this->getFAIcon(), $this->mime);
+    }
+
+    private function getFAIcon(): string
+    {
+        return match ($this->type) {
+            Type::MOVIE => 'fa-file-video',
+            Type::AUDIO => 'fa-file-audio',
+            Type::IMAGE => 'fa-file-image',
+            default => match($this->mime) {
+                'application/pdf' => 'fa-file-pdf',
+                'application/zip', 'application/gzip', 'application/x-zip-compressed' => 'fa-file-archive',
+                'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'fa-file-word',
+                'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'fa-file-excel',
+                default => 'fa-file'
+            }
+        };
     }
 
     public function getAspectRatio(): AspectRatio
