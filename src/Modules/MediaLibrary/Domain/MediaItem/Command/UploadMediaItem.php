@@ -18,7 +18,6 @@ final class UploadMediaItem
 
     public string $title;
 
-    #[Assert\File(mimeTypes: ['image/png'])]
     public ?UploadedFile $file = null;
 
     public $fileName;
@@ -31,6 +30,17 @@ final class UploadMediaItem
 
     public function __construct()
     {
+    }
+
+    public static function fromCrop(CropMediaItem $data): self
+    {
+        $self = new self();
+        $self->mediaFolder = $data->folder;
+        $self->title = $data->title;
+        $self->file = $data->file;
+        $self->vich = $data->crop;
+
+        return $self;
     }
 
     public function getMediaItem(): MediaItem

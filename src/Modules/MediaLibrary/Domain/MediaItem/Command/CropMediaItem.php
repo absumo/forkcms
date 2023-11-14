@@ -8,24 +8,18 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-final class UpdateMediaItem extends MediaItemDataTransferObject
+#[Vich\Uploadable]
+final class CropMediaItem extends MediaItemDataTransferObject
 {
-    public ?UploadedFile $file = null;
-
-    #[Vich\UploadableField(mapping: 'files', fileNameProperty: 'fileName')]
-    public ?File $vich = null;
-
     public function __construct(MediaItem $mediaItem)
     {
         parent::__construct($mediaItem);
     }
 
-    public static function fromCrop(CropMediaItem $data): self
-    {
-        $self = new self($data->mediaItemEntity);
-        $self->file = $data->file;
-        $self->vich = $data->crop;
+    public ?UploadedFile $file = null;
 
-        return $self;
-    }
+    public string $fileName;
+
+    #[Vich\UploadableField(mapping: 'files', fileNameProperty: 'fileName')]
+    public ?File $crop = null;
 }

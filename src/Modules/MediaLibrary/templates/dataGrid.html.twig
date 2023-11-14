@@ -63,9 +63,11 @@
                 {% if column.isHtml %}{{ value|raw }}{% else %}{{ value }}{% endif %}
                 </div>
               {% else %}
-                <a href="{{ path(column.route, column.routeAttributes(row)) }}"{% if column.class %} class="{{ column.class }}"{% endif %} title="{{ value }}">
-                  {% if column.iconClass %}<i class="{{ column.iconClass }}"></i>{% else %}{% if column.isHtml %}{{ value|raw }}{% else %}{{ value }}{% endif %}{% endif %}
-                </a>
+                <div {% for key, value in column.columnAttributes(row) %} {{ key }}="{{ value }}"{% endfor %}>
+                  <a href="{{ path(column.route, column.routeAttributes(row)) }}"{% if column.class %} class="{{ column.class }}"{% endif %} title="{{ value }}">
+                    {% if column.iconClass %}<i class="{{ column.iconClass }}"></i>{% else %}{% if column.isHtml %}{{ value|raw }}{% else %}{{ value }}{% endif %}{% endif %}
+                  </a>
+                </div>
               {% endif %}
             {% endblock %}
           {% endif %}

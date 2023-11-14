@@ -5,6 +5,7 @@ namespace ForkCMS\Modules\MediaLibrary\Domain\MediaItem;
 use Doctrine\DBAL\Types\Types;
 use ForkCMS\Core\Domain\Settings\EntityWithSettingsTrait;
 use ForkCMS\Modules\Backend\Domain\Action\ModuleAction;
+use ForkCMS\Modules\MediaLibrary\Domain\MediaItem\Command\UpdateMediaItem;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGrid;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridActionColumn;
 use Pageon\DoctrineDataGridBundle\Attribute\DataGridMethodColumn;
@@ -29,7 +30,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
         'action' => 'media-item-edit',
     ],
     routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
-    label: 'lbl.Edit',
+    label: 'lbl.Rename',
     class: 'btn btn-sm btn-primary me-2',
     iconClass: 'fa fas fa-edit me-0',
     requiredRole: ModuleAction::ROLE_PREFIX . 'BACKEND__MEDIA_ITEM_EDIT',
@@ -39,14 +40,14 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
     route: 'backend_action',
     routeAttributes: [
         'module' => 'media-library',
-        'action' => 'media-item-edit', // TODO: crop action
+        'action' => 'media-item-crop',
     ],
     routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
     label: 'lbl.Crop',
     class: 'btn btn-sm btn-primary me-2',
     iconClass: 'fa fas fa-crop me-0',
     requiredRole: ModuleAction::ROLE_PREFIX . 'BACKEND__MEDIA_ITEM_EDIT',
-    columnAttributes: ['class' => 'fork-data-grid-action'],
+    columnAttributesCallback: [self::class, 'dataGridCropCallback'],
 )]
 #[DataGridActionColumn(
     route: 'backend_action',
@@ -71,7 +72,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
     label: 'lbl.Delete',
     class: 'btn btn-sm btn-danger ms-auto',
     iconClass: 'fa fas fa-trash-alt me-0',
-    requiredRole: ModuleAction::ROLE_PREFIX . 'BACKEND__MEDIA_ITEM_EDIT',
+    requiredRole: ModuleAction::ROLE_PREFIX . 'BACKEND__MEDIA_ITEM_DELETE',
     columnAttributes: ['class' => 'fork-data-grid-action'],
 )]
 #[Vich\Uploadable]
@@ -151,13 +152,19 @@ class MediaItem implements JsonSerializable
     /** Called by Vich */
     public function setMime(?string $mime): void
     {
+        if ($mime === null) {
+            return;
+        }
         $this->mime = $mime;
         $this->type = Type::fromMimeType($mime);
     }
 
     /** Called by Vich */
-    public function setDimensions(array $dimensions): void
+    public function setDimensions(?array $dimensions): void
     {
+        if ($dimensions === null) {
+            return;
+        }
         $this->width = $dimensions[0] ?? null;
         $this->height = $dimensions[1] ?? null;
         $this->refreshAspectRatio();
@@ -189,7 +196,12 @@ class MediaItem implements JsonSerializable
         $mediaItem->title = $mediaItemDataTransferObject->title;
         $mediaItem->folder = $mediaItemDataTransferObject->folder;
         $mediaItem->userId = $mediaItemDataTransferObject->userId;
-        // $mediaItem->path = $mediaItemDataTransferObject->path;
+        if ($mediaItemDataTransferObject instanceof UpdateMediaItem && $mediaItemDataTransferObject->vich !== null) {
+            $mediaItem->setFile($mediaItemDataTransferObject->vich);
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $mediaItem->editedOn = new DateTime();
+        }
 
         return $mediaItem;
     }
@@ -268,8 +280,11 @@ class MediaItem implements JsonSerializable
         return $this->title;
     }
 
-    public function setTitle(string $title): void
+    public function setTitle(?string $title): void
     {
+        if ($title === null) {
+            return;
+        }
         $this->title = $title;
     }
 
@@ -385,5 +400,14 @@ class MediaItem implements JsonSerializable
         $attributes['slug'] = $mediaItem->getId();
 
         return $attributes;
+    }
+
+    public static function dataGridCropCallback(self $mediaItem): array
+    {
+        if ($mediaItem->type === Type::IMAGE) {
+            return ['class' => 'fork-data-grid-action'];
+        }
+
+        return ['class' => 'd-none'];
     }
 }
