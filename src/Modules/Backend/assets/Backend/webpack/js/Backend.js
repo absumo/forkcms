@@ -3,6 +3,8 @@
 import * as bootstrap from 'bootstrap/dist/js/bootstrap.js'
 import 'select2/dist/js/select2.full'
 import 'flatpickr'
+import { createApp } from 'vue'
+import MediaSelector from './Components/MediaSelector.vue'
 
 // component imports
 import { Data } from '../../../../../../Core/assets/js/Components/Data'
@@ -51,6 +53,15 @@ export class Backend {
     this.session = new Session()
     this.ajaxContentEditable = new AjaxContentEditable(this.locale)
     this.initToasts = new InitBsToasts()
+
+    // init media selector vue component
+    const mediaSelector = document.querySelector('media-selector')
+    if (mediaSelector) {
+      const app = createApp()
+      // global component
+      app.component('MediaSelector', MediaSelector)
+      app.mount('#content')
+    }
 
     Backend.initPasswordGenerators()
     Backend.initPasswordStrenghtMeters()
