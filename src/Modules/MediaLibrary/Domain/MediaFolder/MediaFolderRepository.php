@@ -84,4 +84,10 @@ final class MediaFolderRepository extends ServiceEntityRepository
 
         return $mediaFolder;
     }
+
+    /** @return MediaFolder[] */
+    public function findTopLevel(): array
+    {
+        return $this->findBy(['parent' => null]);
+    }
 }

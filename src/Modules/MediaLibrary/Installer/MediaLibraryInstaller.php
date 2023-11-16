@@ -8,6 +8,7 @@ use ForkCMS\Modules\MediaLibrary\Backend\Actions\MediaItemCrop;
 use ForkCMS\Modules\MediaLibrary\Backend\Actions\MediaItemEdit;
 use ForkCMS\Modules\MediaLibrary\Backend\Actions\MediaItemIndex;
 use ForkCMS\Modules\MediaLibrary\Backend\Actions\MediaItemUpload;
+use ForkCMS\Modules\MediaLibrary\Backend\Ajax\MediaItemFindAll;
 use ForkCMS\Modules\MediaLibrary\Domain\MediaFolder\Command\CreateMediaFolder;
 use ForkCMS\Modules\MediaLibrary\Domain\MediaFolder\MediaFolder;
 use ForkCMS\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
@@ -27,6 +28,7 @@ final class MediaLibraryInstaller extends ModuleInstaller
         $this->importTranslations(__DIR__ . '/../assets/installer/translations.xml');
         $this->configureSettings();
         $this->createBackendPages();
+        $this->configureBackendAjaxActions();
         $this->loadMediaFolders();
     }
 
@@ -47,6 +49,11 @@ final class MediaLibraryInstaller extends ModuleInstaller
     protected function configureSettings(): void
     {
         $this->setSetting('upload_number_of_sharding_folders', 15);
+    }
+
+    private function configureBackendAjaxActions(): void
+    {
+        $this->allowGroupToAccessModuleAjaxAction(MediaItemFindAll::getAjaxActionSlug()->asModuleAction());
     }
 
     protected function loadMediaFolders(): void

@@ -210,19 +210,11 @@ class MediaItem implements JsonSerializable
     {
         return [
             'id' => $this->id,
-            'folder' => $this->folder,
-            'userId' => $this->userId,
-            'type' => $this->type->value,
-            'storageType' => $this->storageType->value,
             'mime' => $this->mime,
-            'path' => $this->path,
+            'url' => $this->webpath,
             'title' => $this->title,
-            'size' => $this->size,
-            'width' => $this->width,
-            'height' => $this->height,
-            'createdOn' => $this->createdOn->getTimestamp(),
-            'editedOn' => $this->editedOn->getTimestamp(),
-            $this->type->value => true,
+            'created' => $this->createdOn->format('d/m/Y'),
+            'used' => 2995, // TODO
         ];
     }
 

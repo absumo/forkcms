@@ -105,12 +105,9 @@ class MediaFolder implements JsonSerializable, Stringable
     {
         return [
             'id' => $this->id,
-            'parent' => $this->parent,
-            'userId' => $this->userId,
             'name' => $this->name,
-            'createdOn' => $this->createdOn->getTimestamp(),
-            'editedOn' => $this->editedOn->getTimestamp(),
-            'numberOfItems' => $this->getItems()->count(),
+            'items' => $this->items->toArray(),
+            'children' => $this->children->toArray(),
         ];
     }
 
