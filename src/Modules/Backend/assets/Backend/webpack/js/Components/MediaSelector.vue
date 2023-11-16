@@ -138,184 +138,7 @@ export default {
         cancel: 'cancel',
         save: 'save'
       },
-      imageOptions: {
-        folder1: {
-          name: 'default',
-          id: 'folder1',
-          items: [
-            {
-              url: 'https://plus.unsplash.com/premium_photo-1692872337283-4fae5a90fb05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80',
-              id: 'image1',
-              title: 'Image 1',
-              created: '14/08/2023',
-              used: 1
-            },
-            {
-              url: 'https://plus.unsplash.com/premium_photo-1692872337283-4fae5a90fb05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80',
-              id: 'image2',
-              title: 'Image 2',
-              created: '26/05/2023',
-              used: 1
-            },
-            {
-              url: 'https://plus.unsplash.com/premium_photo-1692872337283-4fae5a90fb05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80',
-              id: 'image3',
-              title: 'Image 3',
-              created: '02/12/2021',
-              used: 0
-            },
-            {
-              url: 'https://plus.unsplash.com/premium_photo-1692872337283-4fae5a90fb05?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80',
-              id: 'image4',
-              title: 'Image 4',
-              created: '12/09/2023',
-              used: 2995
-            },
-          ],
-          children: {
-            folder1a: {
-              name: 'icons',
-              id: 'folder1a',
-              items: [
-                {
-                  url: 'https://plus.unsplash.com/premium_photo-1677094766815-e0fe790e364a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
-                  id: 'image5',
-                  title: 'Image 5',
-                  created: '12/09/2023',
-                  used: 2995
-                },
-                {
-                  url: 'https://plus.unsplash.com/premium_photo-1677094766815-e0fe790e364a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
-                  id: 'image6',
-                  title: 'Langere image title die heel lang is',
-                  created: '12/09/2023',
-                  used: 2995
-                },
-                {
-                  url: 'https://plus.unsplash.com/premium_photo-1677094766815-e0fe790e364a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
-                  id: 'image7',
-                  title: 'Image 7',
-                  created: '12/09/2023',
-                  used: 2995
-                },
-                {
-                  url: 'https://plus.unsplash.com/premium_photo-1677094766815-e0fe790e364a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
-                  id: 'image8',
-                  title: 'Image 8',
-                  created: '12/09/2023',
-                  used: 2995
-                },
-              ]
-            }
-          }
-        },
-        folder3: {
-          name: 'images',
-          id: 'folder3',
-          items: [
-            {
-              url: 'https://images.unsplash.com/photo-1501183007986-d0d080b147f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
-              id: 'image9',
-              title: 'Image 9',
-              created: '12/09/2023',
-              used: 2995
-            },
-            {
-              url: 'https://images.unsplash.com/photo-1501183007986-d0d080b147f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
-              id: 'image10',
-              title: 'Image 10',
-              created: '12/09/2023',
-              used: 2995
-            },
-            {
-              url: 'https://images.unsplash.com/photo-1501183007986-d0d080b147f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
-              id: 'image11',
-              title: 'Image 11',
-              created: '12/09/2023',
-              used: 2995
-            },
-            {
-              url: 'https://images.unsplash.com/photo-1501183007986-d0d080b147f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
-              id: 'image12',
-              title: 'Image 12',
-              created: '12/09/2023',
-              used: 2995
-            },
-          ],
-          children: {
-            folder4: {
-              name: 'marketing',
-              id: 'folder4',
-              items: [
-                {
-                  url: 'https://images.unsplash.com/photo-1532767153582-b1a0e5145009?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
-                  id: 'image13',
-                  title: 'Image 13',
-                  created: '12/09/2023',
-                  used: 2995
-                },
-                {
-                  url: 'https://images.unsplash.com/photo-1532767153582-b1a0e5145009?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
-                  id: 'image14',
-                  title: 'Image 14',
-                  created: '12/09/2023',
-                  used: 2995
-                },
-                {
-                  url: 'https://images.unsplash.com/photo-1532767153582-b1a0e5145009?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
-                  id: 'image15',
-                  title: 'Image 15',
-                  created: '12/09/2023',
-                  used: 2995
-                },
-                {
-                  url: 'https://images.unsplash.com/photo-1532767153582-b1a0e5145009?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80',
-                  id: 'image16',
-                  title: 'Image 16',
-                  created: '12/09/2023',
-                  used: 2995
-                },
-              ],
-              children: {
-                folder5: {
-                  name: 'socials',
-                  id: 'folder5',
-                  items: [
-                    {
-                      url: 'https://images.unsplash.com/photo-1525498128493-380d1990a112?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1335&q=80',
-                      id: 'image17',
-                      title: 'Image 17',
-                      created: '12/09/2023',
-                      used: 2995
-                    },
-                    {
-                      url: 'https://images.unsplash.com/photo-1525498128493-380d1990a112?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1335&q=80',
-                      id: 'image18',
-                      title: 'Image 18',
-                      created: '12/09/2023',
-                      used: 2995
-                    },
-                    {
-                      url: 'https://images.unsplash.com/photo-1525498128493-380d1990a112?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1335&q=80',
-                      id: 'image19',
-                      title: 'Image 19',
-                      created: '12/09/2023',
-                      used: 2995
-                    },
-                    {
-                      url: 'https://images.unsplash.com/photo-1525498128493-380d1990a112?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1335&q=80',
-                      id: 'image20',
-                      title: 'Image 20',
-                      created: '12/09/2023',
-                      used: 2995
-                    },
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
+      imageOptions: []
     }
   },
   methods: {
@@ -364,24 +187,21 @@ export default {
     moveItemInArray(event) {
       const item = this.images.splice(event.oldIndex, 1)[0]
       this.images.splice(event.newIndex, 0, item)
-    }
-    // getImages() {
+    },
+    getMedia() {
       // get images from media library
-      // const url = ''
-      // axios.get(url)
-      //     .then(response => {
-      //
-      //     }),
-    // getFiles() {
-    // get files from media library
-    // const url = ''
-    // axios.get(url)
-    //     .then(response => {
-    //
-    //     })
+      const url = '/private/en/media-library/media-item-find-all'
+      axios.get(url)
+          .then(response => {
+            console.log(response)
+            this.imageOptions = response.data
+            if (this.imageOptions.length > 0) this.selectedFolder = this.imageOptions[0]
+          })
+    }
   },
   mounted () {
     console.log(window.backend.locale)
+    this.getMedia()
     this.trans.select = window.backend.locale.get('lbl', 'Select')
     this.trans.deselect = window.backend.locale.get('lbl', 'Deselect')
     this.trans.cancel = window.backend.locale.get('lbl', 'Cancel')
@@ -393,7 +213,6 @@ export default {
     }
     if (this.max) this.limit = this.max
     else if (this.multiple && !this.max) this.limit = null
-    this.selectedFolder = Object.entries(this.imageOptions)[0][1]
   }
 }
 </script>
