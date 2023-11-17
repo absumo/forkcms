@@ -1,5 +1,7 @@
 import Dropzone from 'dropzone'
 import Cropper from 'cropperjs'
+import { Copy } from './Copy'
+import { Delete } from './Delete'
 
 window.Dropzone = Dropzone
 window.Cropper = Cropper
@@ -22,7 +24,7 @@ window.addEventListener('DOMContentLoaded', function () {
         }
         ev.preventDefault()
         img.cropper.getCroppedCanvas().toBlob((blob) => {
-          const file = new File([blob], img.dataset.name, { type: img.dataset.mime, lastModified: new Date().getTime() })
+          const file = new window.File([blob], img.dataset.name, { type: img.dataset.mime, lastModified: new Date().getTime() })
           const container = new window.DataTransfer()
           container.items.add(file)
           form.querySelector('input[type="file"]').files = container.files
@@ -31,5 +33,22 @@ window.addEventListener('DOMContentLoaded', function () {
         }, img.dataset.mime)
       })
     }
+  }
+
+  for (const element of document.querySelectorAll('[data-copy]')) {
+    element.copy = new Copy(element)
+  }
+
+  for (const element of document.querySelectorAll('[data-delete]')) {
+    element.delete = new Delete(element)
+  }
+
+  const deleteModal = document.getElementById('deleteMediaItemModal')
+  if (deleteModal) {
+    deleteModal.addEventListener('show.bs.modal', event => {
+      const modalBody = event.target.querySelector('.modal-body')
+      modalBody.innerHTML = modalBody.innerHTML.replace(/".+"/, '"' + event.relatedTarget.dataset.title + '"')
+      event.target.querySelector('#action_id').value = event.relatedTarget.dataset.id
+    })
   }
 })

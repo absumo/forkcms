@@ -53,27 +53,26 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
     route: 'backend_action',
     routeAttributes: [
         'module' => 'media-library',
-        'action' => 'media-item-edit', // TODO: link action
+        'action' => 'media-item-show',
     ],
     routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
     label: 'lbl.Link',
     class: 'btn btn-sm btn-primary me-2',
     iconClass: 'fa fas fa-link me-0',
-    requiredRole: ModuleAction::ROLE_PREFIX . 'BACKEND__MEDIA_ITEM_EDIT',
-    columnAttributes: ['class' => 'fork-data-grid-action'],
+    columnAttributesCallback: [self::class, 'dataGridLinkCallback'],
 )]
 #[DataGridActionColumn(
     route: 'backend_action',
     routeAttributes: [
         'module' => 'media-library',
-        'action' => 'media-item-delete', // TODO: confirm delete action
+        'action' => 'media-item-delete',
     ],
     routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
     label: 'lbl.Delete',
     class: 'btn btn-sm btn-danger ms-auto',
     iconClass: 'fa fas fa-trash-alt me-0',
     requiredRole: ModuleAction::ROLE_PREFIX . 'BACKEND__MEDIA_ITEM_DELETE',
-    columnAttributes: ['class' => 'fork-data-grid-action'],
+    columnAttributesCallback: [self::class, 'dataGridDeleteCallback'],
 )]
 #[Vich\Uploadable]
 class MediaItem implements JsonSerializable
@@ -117,7 +116,7 @@ class MediaItem implements JsonSerializable
     private ?File $file = null;
 
     private function __construct(
-        #[DataGridPropertyColumn(sortable: true, filterable: true, label: 'lbl.Title', class: 'small')]
+        #[DataGridPropertyColumn(sortable: true, filterable: true, label: 'lbl.Title', class: 'small media-item-title')]
         #[ORM\Column(type: Types::STRING)]
         protected string $title,
         #[ORM\Column(type: Types::STRING)]
@@ -394,6 +393,14 @@ class MediaItem implements JsonSerializable
         return $attributes;
     }
 
+    public static function dataGridLinkCallback(self $mediaItem): array
+    {
+        return [
+            'class' => 'fork-data-grid-action',
+            'data-copy' => $mediaItem->webpath,
+        ];
+    }
+
     public static function dataGridCropCallback(self $mediaItem): array
     {
         if ($mediaItem->type === Type::IMAGE) {
@@ -401,5 +408,18 @@ class MediaItem implements JsonSerializable
         }
 
         return ['class' => 'd-none'];
+    }
+
+    public static function dataGridDeleteCallback(self $mediaItem): array
+    {
+        return [
+            'class' => 'fork-data-grid-action',
+            'data-delete' => '',
+            'data-bs-toggle' => 'modal',
+            'data-bs-target' => '#deleteMediaItemModal',
+            'type' => 'button',
+            'data-id' => $mediaItem->getId(),
+            'data-title' => $mediaItem->getTitle(),
+        ];
     }
 }

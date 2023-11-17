@@ -2,8 +2,10 @@
 
 namespace ForkCMS\Modules\MediaLibrary\Backend\Actions;
 
+use ForkCMS\Core\Domain\Form\ActionType;
 use ForkCMS\Modules\Backend\Domain\Action\AbstractDataGridActionController;
 use ForkCMS\Modules\Backend\Domain\Action\ActionServices;
+use ForkCMS\Modules\Backend\Domain\Action\ActionSlug;
 use ForkCMS\Modules\Internationalisation\Domain\Locale\Locale;
 use ForkCMS\Modules\MediaLibrary\Domain\MediaFolder\MediaFolderRepository;
 use ForkCMS\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
@@ -31,5 +33,31 @@ class MediaItemIndex extends AbstractDataGridActionController
         $dataGrid = $this->dataGridFactory->forEntity(MediaItem::class);
 
         $this->assign('dataGrid', $dataGrid);
+
+        $this->addDeleteForm(
+            ['id' => null],
+            ActionSlug::fromFQCN(MediaItemDelete::class)
+        );
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $options
+     */
+    final protected function addDeleteForm(
+        array $data,
+        ActionSlug $deleteActionSlug,
+        string $formType = ActionType::class,
+        array $options = []
+    ): void {
+        $this->assign('crudDeleteAction', $deleteActionSlug->getActionName());
+        $this->assign(
+            'backend_delete_form',
+            $this->formFactory->create(
+                $formType,
+                $data,
+                array_merge(['actionSlug' => $deleteActionSlug], $options)
+            )->createView()
+        );
     }
 }

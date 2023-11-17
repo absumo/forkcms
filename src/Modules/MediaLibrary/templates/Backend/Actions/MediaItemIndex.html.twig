@@ -8,4 +8,28 @@
 
 {% block content %}
   {{ media_library_datagrid(dataGrid) }}
+
+  {% if crudDeleteAction is defined and is_allowed(crudDeleteAction) %}
+    <div class="modal fade" id="deleteMediaItemModal" data-bs-keyboard="false" tabindex="-1" aria-hidden="true" aria-labelledby="confirmDeleteTitle">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          {{ form_start(backend_delete_form) }}
+          {{ form_row(backend_delete_form._token) }}
+          {{ form_row(backend_delete_form.id) }}
+          <div class="modal-header">
+            <h4 class="modal-title fs-5" id="confirmDeleteTitle">{{ 'lbl.Delete'|trans|ucfirst }}</h4>
+          </div>
+          <div class="modal-body">
+            <p>{{ 'msg.ConfirmDelete'|trans }}</p>
+          </div>
+          <div class="modal-footer">
+            {{ macro.buttonIcon('', confirmDeleteCancelIcon|default('times'), confirmDeleteCancelLabel|default('lbl.Cancel'|trans|ucfirst), confirmDeleteCancelClass|default('btn-default'), {"type":"button", "data-bs-dismiss":"modal"}) }}
+            {{ macro.buttonIcon('', confirmDeleteSubmitIcon|default('trash'), confirmDeleteSubmitLabel|default('lbl.Delete'|trans|ucfirst), confirmDeleteSubmitClass|default('btn-danger'), {"type":"submit"}) }}
+          </div>
+          {{ form_end(backend_delete_form) }}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
 {% endblock %}

@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Modules\MediaLibrary\Backend\Actions;
 
+use ForkCMS\Core\Domain\Header\FlashMessage\FlashMessage;
 use ForkCMS\Modules\Backend\Domain\Action\AbstractDeleteActionController;
 use ForkCMS\Modules\MediaLibrary\Domain\MediaItem\Command\DeleteMediaItem;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,9 +13,10 @@ class MediaItemDelete extends AbstractDeleteActionController
     protected function getFormResponse(Request $request): ?Response
     {
         return $this->handleDeleteForm(
-            $request,
-            DeleteMediaItem::class,
-            MediaItemIndex::getActionSlug()
+            request: $request,
+            deleteCommandFullyQualifiedClassName: DeleteMediaItem::class,
+            redirectActionSlug: MediaItemIndex::getActionSlug(),
+            flashMessage: FlashMessage::success('Deleted'),
         );
     }
 }
