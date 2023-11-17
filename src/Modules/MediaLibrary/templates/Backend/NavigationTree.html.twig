@@ -13,25 +13,21 @@
         <input id="pagetree-search" name="pagetree-search" value="" maxlength="255" type="text" class="form-control fork-form-text form-control-sm js-tree-search" placeholder="{{ 'lbl.search'|trans|ucfirst }}">
       </div>
     </div>
-    <div id="tree" data-tree-pages {% if overview %} data-clear-tree{% endif %}>
+    <div id="tree" data-tree-pages style="display: block;">
+      <h4>{{ 'lbl.MediaFolders'|trans|ucfirst }}</h4>
       {% apply spaceless %}
-        {% for subtree in sidebarTree %}
-          <h4>{{ subtree.label|trans|ucfirst }}</h4>
-          <div class="clearfix" data-tree="{{ subtree.label.value }}">
-            {{ _self.parseTree(subtree.pages) }}
-          </div>
-        {% endfor %}
+        {{ _self.parseTree(sidebarTree, selected) }}
       {% endapply %}
     </div>
   </div>
 </div>
 
-{% macro parseTree(tree) %}
+{% macro parseTree(tree, selected) %}
   <ul>
-    {% for navigationItem in tree %}
-      <li id="page-{{ navigationItem.page.id }}"{% for attr,value in navigationItem.attr %} {{ attr }}='{{ value|raw }}'{% endfor %} data-allow-children="{{ navigationItem.page.getSetting('allowChildren') ? 'true' : 'false' }}" data-allow-move="{{ navigationItem.page.getSetting('allowMove') ? 'true' : 'false' }}">
-      <a href="{{ action_url('MediaItemEdit', null, {'slug': navigationItem.page.id}) }}"><ins>&#160;</ins>{{ navigationItem.page.activeRevision.navigationTitle }}</a>
-      {% if navigationItem.children is not empty %}{{ _self.parseTree(navigationItem.children) }}{% endif %}
+    {% for id, folder in tree %}
+      <li id="media-folder-{{ id }}" rel="folder" class="{% if selected == id %}selected{% endif %}">
+        <a href="{{ action_url('MediaItemIndex', null, {'folder': id}) }}">{{ folder.label }} ({{ folder.itemCount }})</a>
+        {% if folder.children is not empty %}{{ _self.parseTree(folder.children, selected) }}{% endif %}
       </li>
     {% endfor %}
   </ul>

@@ -2,13 +2,16 @@
 
 namespace ForkCMS\Modules\MediaLibrary\Domain\MediaFolder;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 class MediaFolderDataTransferObject
 {
-    public ?MediaFolder $parent;
+    public ?MediaFolder $parent = null;
 
-    public string $name;
+    #[Assert\NotBlank]
+    public ?string $name = null;
 
-    public int $userId;
+    public int $userId = 1;
 
     public function __construct(protected ?MediaFolder $mediaFolderEntity = null)
     {

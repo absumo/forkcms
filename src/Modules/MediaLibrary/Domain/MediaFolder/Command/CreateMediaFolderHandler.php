@@ -16,7 +16,7 @@ final class CreateMediaFolderHandler
     public function __invoke(CreateMediaFolder $createMediaFolder): void
     {
         $mediaFolder = MediaFolder::fromDataTransferObject($createMediaFolder);
-        $this->mediaFolderRepository->add($mediaFolder);
+        $this->mediaFolderRepository->save($mediaFolder);
 
         // We redefine the MediaFolder, so we can use it in an action
         $createMediaFolder->setMediaFolderEntity($mediaFolder);

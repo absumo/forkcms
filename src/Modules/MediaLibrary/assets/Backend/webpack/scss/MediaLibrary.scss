@@ -1,6 +1,9 @@
 @import "~dropzone/dist/basic";
 @import "~dropzone/dist/dropzone";
 @import "~cropperjs/dist/cropper";
+@import "~bootstrap/scss/functions";
+@import '~bootstrap/scss/variables';
+@import '../../../../../Backend/assets/Backend/webpack/scss/bootstrap-variables';
 
 .card-media-item {
   .card-body {
@@ -31,5 +34,18 @@
       height: 100%;
       object-fit: cover;
     }
+  }
+}
+
+#tree li[rel="folder"] {
+  &::marker {
+    font-family: emoji;
+    content: "\1F4C1";
+  }
+
+  &.selected > a {
+    background: $primary;
+    color: $white;
+    border-radius: 4px;
   }
 }

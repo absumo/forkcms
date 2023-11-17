@@ -116,7 +116,7 @@ class MediaItem implements JsonSerializable
     private ?File $file = null;
 
     private function __construct(
-        #[DataGridPropertyColumn(sortable: true, filterable: true, label: 'lbl.Title', class: 'small media-item-title')]
+        #[DataGridPropertyColumn(filterable: true, label: 'lbl.Title', class: 'small media-item-title')]
         #[ORM\Column(type: Types::STRING)]
         protected string $title,
         #[ORM\Column(type: Types::STRING)]

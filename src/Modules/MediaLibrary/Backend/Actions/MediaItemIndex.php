@@ -2,6 +2,7 @@
 
 namespace ForkCMS\Modules\MediaLibrary\Backend\Actions;
 
+use Doctrine\ORM\QueryBuilder;
 use ForkCMS\Core\Domain\Form\ActionType;
 use ForkCMS\Modules\Backend\Domain\Action\AbstractDataGridActionController;
 use ForkCMS\Modules\Backend\Domain\Action\ActionServices;
@@ -26,11 +27,22 @@ class MediaItemIndex extends AbstractDataGridActionController
     {
         $this->assign('sidebarTree', $this->navigationBuilder->getTree(Locale::current()));
 
-        // TODO: MediaFolder filter
         $mediaFolder = $this->mediaFolderRepository->find($request->query->getInt('folder'));
+        $this->assign('mediaFolder', $mediaFolder);
         $searchQuery = $request->get('query');
 
-        $dataGrid = $this->dataGridFactory->forEntity(MediaItem::class);
+        $dataGrid = $this->dataGridFactory->forEntity(
+            MediaItem::class,
+            static function (QueryBuilder $queryBuilder) use ($mediaFolder): void {
+                if ($mediaFolder === null) {
+                    return;
+                }
+                $queryBuilder
+                    ->andWhere('MediaItem.folder = :folder')
+                    ->setParameter('folder', $mediaFolder)
+                ;
+            },
+        );
 
         $this->assign('dataGrid', $dataGrid);
 

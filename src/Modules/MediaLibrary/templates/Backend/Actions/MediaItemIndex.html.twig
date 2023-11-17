@@ -1,9 +1,17 @@
 {% extends '@Backend/base/crud/index.html.twig' %}
 {% import '@Backend/base/macros.html.twig' as macro %}
-{% set crudActionName = 'MediaItemUpload' %}
+
+{% block actionbar %}
+  <div class="btn-toolbar justify-content-end">
+    <div class="btn-group" role="group">
+      {{ macro.buttonIcon(action_path('MediaItemUpload', crudActionModule, crudActionParameters, crudActionRelative, crudActionLocale), 'upload', 'lbl.UploadMediaItem'|trans|ucfirst, 'btn-default') }}
+      {{ macro.buttonIcon(action_path('MediaFolderAdd', crudActionModule, crudActionParameters, crudActionRelative, crudActionLocale), 'folder', 'lbl.AddMediaFolder'|trans|ucfirst, 'btn-default') }}
+    </div>
+  </div>
+{% endblock %}
 
 {% block sidebarSubNavigation %}
-  {% include '@MediaLibrary/Backend/NavigationTree.html.twig' with {'overview': true} %}
+  {% include '@MediaLibrary/Backend/NavigationTree.html.twig' with {'overview': true, 'selected': mediaFolder ? mediaFolder.id : null} %}
 {% endblock %}
 
 {% block content %}

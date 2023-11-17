@@ -11,9 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
 use ForkCMS\Modules\MediaLibrary\Domain\MediaItem\MediaItem;
 use JsonSerializable;
 
-/**
- * MediaFolder
- */
 #[ORM\Entity(repositoryClass: MediaFolderRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class MediaFolder implements JsonSerializable, Stringable
@@ -30,11 +27,11 @@ class MediaFolder implements JsonSerializable, Stringable
     protected DateTime $editedOn;
 
     /** @var Collection<array-key, MediaItem> */
-    #[ORM\OneToMany(targetEntity: MediaItem::class, mappedBy: 'folder', cascade: ['persist', 'merge'], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'folder', targetEntity: MediaItem::class, cascade: ['persist', 'merge'], orphanRemoval: true)]
     protected Collection $items;
 
     /** @var Collection<array-key, MediaFolder> */
-    #[ORM\OneToMany(targetEntity: MediaFolder::class, mappedBy: 'parent', cascade: ['persist', 'merge'], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: MediaFolder::class, cascade: ['persist', 'merge'], orphanRemoval: true)]
     protected Collection $children;
 
     /**
@@ -45,7 +42,7 @@ class MediaFolder implements JsonSerializable, Stringable
     protected function __construct(
         #[ORM\Column(type: Types::STRING)]
         protected string $name,
-        #[ORM\ManyToOne(targetEntity: MediaFolder::class, inversedBy: 'children', cascade: ['persist'])]
+        #[ORM\ManyToOne(targetEntity: MediaFolder::class, cascade: ['persist'], inversedBy: 'children')]
         #[ORM\JoinColumn(name: 'parentMediaFolderId', referencedColumnName: 'id', onDelete: 'cascade')]
         protected ?MediaFolder $parent,
         #[ORM\Column(type: Types::INTEGER)]
@@ -53,18 +50,6 @@ class MediaFolder implements JsonSerializable, Stringable
     ) {
         $this->items = new ArrayCollection();
         $this->children = new ArrayCollection();
-    }
-
-    public static function create(
-        string $name,
-        ?MediaFolder $parent,
-        int $userId
-    ) : MediaFolder {
-        return new self(
-            $name,
-            $parent,
-            $userId
-        );
     }
 
     public function update(string $name, MediaFolder $parent = null): void
@@ -94,7 +79,7 @@ class MediaFolder implements JsonSerializable, Stringable
             return $mediaFolder;
         }
 
-        return self::create(
+        return new self(
             $mediaFolderDataTransferObject->name,
             $mediaFolderDataTransferObject->parent,
             $mediaFolderDataTransferObject->userId
@@ -147,6 +132,14 @@ class MediaFolder implements JsonSerializable, Stringable
 
     public function getName(): string
     {
+        return $this->name;
+    }
+
+    public function getCompleteName(): string
+    {
+        if ($this->parent) {
+            return $this->parent->getCompleteName() . '/' . $this->getName();
+        }
         return $this->name;
     }
 

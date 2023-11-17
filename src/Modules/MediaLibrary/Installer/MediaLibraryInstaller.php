@@ -4,6 +4,7 @@ namespace ForkCMS\Modules\MediaLibrary\Installer;
 
 use ForkCMS\Modules\Extensions\Domain\Module\ModuleInstaller;
 use ForkCMS\Modules\Internationalisation\Domain\Translation\TranslationKey;
+use ForkCMS\Modules\MediaLibrary\Backend\Actions\MediaFolderAdd;
 use ForkCMS\Modules\MediaLibrary\Backend\Actions\MediaItemCrop;
 use ForkCMS\Modules\MediaLibrary\Backend\Actions\MediaItemEdit;
 use ForkCMS\Modules\MediaLibrary\Backend\Actions\MediaItemIndex;
@@ -41,6 +42,7 @@ final class MediaLibraryInstaller extends ModuleInstaller
                 MediaItemUpload::getActionSlug(),
                 MediaItemEdit::getActionSlug(),
                 MediaItemCrop::getActionSlug(),
+                MediaFolderAdd::getActionSlug(),
             ],
             sequence: 3,
         );
