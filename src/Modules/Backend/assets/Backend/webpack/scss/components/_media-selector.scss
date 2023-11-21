@@ -10,6 +10,7 @@
   @include media-breakpoint-up(md) {
     width: 140px;
     height: 140px;
+    max-width: 140px;
   }
 }
 
@@ -20,6 +21,13 @@
     border: 1px dashed $gray-300;
   }
 
+  &--placeholder-icon {
+    font-size: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   &--preview {
     position: relative;
 
@@ -28,6 +36,14 @@
 
       object-fit: cover;
       border: 1px solid $gray-300;
+    }
+  }
+
+  &--preview-title {
+    max-width: 100%;
+
+    @include media-breakpoint-up(md) {
+      max-width: 140px;
     }
   }
 

@@ -10,12 +10,18 @@
       >
         <template #item="{element, index}" v-if="images.length > 0">
           <div class="col-6 col-md-auto draggable">
-            <div class="media-selector--preview">
+            <div class="media-selector--preview mb-2">
               <a href="#" class="media-selector--remove-btn" @click.prevent="removeSelection(element)" v-if="!min"><i class="fa fa-times"></i></a>
-              <img class="" alt="" :src="element.url" @click="openImageModal" draggable="false">
+              <img class="" alt="" :src="element.url" @click="openImageModal" draggable="false" v-if="element.mime.includes('image')">
+              <div class="media-selector--placeholder media-selector--placeholder-icon" v-else>
+                <i class="fa fa-file-pdf" v-if="element.mime.includes('pdf')"></i>
+                <i class="fa fa-file-archive" v-else-if="element.mime.includes('zip')"></i>
+                <i class="fa fa-file-audio" v-else-if="element.mime.includes('audio')"></i>
+                <i class="fa fa-file-video" v-else-if="element.mime.includes('video')"></i>
+                <i class="fa fa-file" v-else></i>
+              </div>
             </div>
-            {{ element.id }}
-            {{ index }}
+            <p class="media-selector--preview-title"><small>{{ element.title }}</small></p>
           </div>
         </template>
       </Sortable>
@@ -47,11 +53,16 @@
                       <div class="col-auto">
                         <a href="#" @click.prevent="" class="btn btn-primary text-capitalize">
                           <template v-if="images.includes(image)">{{ trans.deselect }}</template>
-                          <template v-else="images.includes(image)">{{ trans.select }}</template>
+                          <template v-else>{{ trans.select }}</template>
                         </a>
                       </div>
                       <div class="col-auto">
-                        <img :src="image.url" alt="" class="" draggable="false">
+                        <img :src="image.url" alt="" class="" draggable="false" v-if="image.mime.includes('image')">
+                        <i class="fa fa-file-pdf" v-else-if="image.mime.includes('pdf')"></i>
+                        <i class="fa fa-file-archive" v-else-if="image.mime.includes('zip')"></i>
+                        <i class="fa fa-file-audio" v-else-if="image.mime.includes('audio')"></i>
+                        <i class="fa fa-file-video" v-else-if="image.mime.includes('video')"></i>
+                        <i class="fa fa-file" v-else></i>
                       </div>
                       <div class="col">
                         {{ image.title }}
