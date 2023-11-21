@@ -184,16 +184,15 @@ export default {
     saveSelection() {
       let ids = this.images.map(image => image.id)
       // TODO: add order to items based on index
-      console.log('ids: ', ids)
-      // axios.post(url, ids)
-      //     .then(response => {
-      //
-      //     })
+      const eventImage = new CustomEvent("image-selection", {
+        bubbles: true,
+        detail: { images: () => ids },
+      });
+      this.$refs['image-selector'].dispatchEvent(eventImage)
       this.fileModal.hide()
     },
     updateSelectedFolder(id) {
       this.selectedFolder = id
-      console.log(id)
     },
     moveItemInArray(event) {
       const item = this.images.splice(event.oldIndex, 1)[0]
