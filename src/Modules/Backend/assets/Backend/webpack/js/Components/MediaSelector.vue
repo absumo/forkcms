@@ -1,5 +1,5 @@
 <template>
-  <div class="media-selector">
+  <div class="media-selector" ref="media-selector">
     <p class="form-label" v-if="label">{{ label }} <span v-if="limit">(maximum {{ limit }})</span>:</p>
     <div class="sortable-row">
       <Sortable
@@ -184,7 +184,7 @@ export default {
         bubbles: true,
         detail: { images: () => ids },
       });
-      this.$refs['image-selector'].dispatchEvent(eventImage)
+      this.$refs['media-selector'].dispatchEvent(eventImage)
       this.fileModal.hide()
     },
     updateSelectedFolder(id) {
