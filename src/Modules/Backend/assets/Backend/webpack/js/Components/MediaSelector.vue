@@ -159,14 +159,10 @@ export default {
     },
     removeSelection(img) {
       let imageIndex = this.images.findIndex(image => image.id === img.id)
-      console.log('index: ', imageIndex)
-      console.log('image: ', img)
       if (imageIndex >= 0) this.images.splice(imageIndex, 1)
     },
     toggleSelection(img) {
       let imageIndex = this.images.findIndex(image => image.id === img.id)
-      console.log('index: ', imageIndex)
-      console.log('image: ', img)
       if (this.limit === 1 && imageIndex < 0) {
         this.images = [img]
         this.saveSelection()
@@ -203,14 +199,12 @@ export default {
       const url = '/private/en/media-library/media-item-find-all'
       axios.get(url)
           .then(response => {
-            console.log(response)
             this.imageOptions = response.data
             if (this.imageOptions.length > 0) this.selectedFolder = this.imageOptions[0]
           })
     }
   },
   mounted () {
-    console.log(window.backend.locale)
     this.getMedia()
     this.trans.select = window.backend.locale.get('lbl', 'Select')
     this.trans.deselect = window.backend.locale.get('lbl', 'Deselect')
