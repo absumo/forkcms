@@ -58,7 +58,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
     routeAttributesCallback: [self::class, 'dataGridEditLinkCallback'],
     label: 'lbl.Link',
     class: 'btn btn-sm btn-primary me-2',
-    iconClass: 'fa fas fa-link me-0',
+    iconClass: 'fa fas fa-copy me-0',
     columnAttributesCallback: [self::class, 'dataGridLinkCallback'],
 )]
 #[DataGridActionColumn(

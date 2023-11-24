@@ -6,6 +6,8 @@
 @import '../../../../../Backend/assets/Backend/webpack/scss/bootstrap-variables';
 
 .card-media-item {
+  height: 100%;
+
   .card-body {
     padding: 0.5rem;
   }
